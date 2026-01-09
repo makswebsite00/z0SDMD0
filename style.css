@@ -75,6 +75,24 @@ h1 {
 
 .card:hover { transform: translateY(-5px); }
 
+.lista-wrapper {
+    max-height: 320px; 
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 5px;
+}
+
+.lista-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+.lista-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.lista-wrapper::-webkit-scrollbar-thumb {
+    background: var(--button-bg-light);
+    border-radius: 10px;
+}
+
 .bible-card { border-top: 5px solid var(--heart-color-light); }
 #versiculo-texto { font-style: italic; font-size: 1.1rem; margin-bottom: 8px; transition: opacity 0.5s; }
 #versiculo-ref { font-weight: 700; color: var(--heart-color-light); font-size: 0.9rem; }
@@ -127,8 +145,10 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%; cursor: pointer;
 }
 
+ul { list-style: none; padding: 0; margin: 0; }
+
 li {
-    background: var(--list-bg-light); margin-top: 12px; padding: 16px;
+    background: var(--list-bg-light); margin-bottom: 12px; padding: 16px;
     border-radius: 20px; text-align: left; border-left: 4px solid var(--list-border-left-light);
 }
 
