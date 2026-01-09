@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosso Cantinho</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <span class="icon-light">☀️</span>
+    <span class="icon-dark">🌙</span>
+  </div>
+
+  <h1>Nosso Cantinho</h1>
+
+  <div class="container">
+
+    <div class="card heart-card">
+      <h2>Quantas vezes escolhemos nos amar</h2>
+      <div class="heart" onclick="clicarCoracao()"></div>
+      <p class="contador" id="contadorAmor">0</p>
+      <p class="descricao">clique sempre que sentir vontade</p>
+    </div>
+
+    <div class="card">
+      <h2>Quer conversar?</h2>
+      <div class="buttons">
+        <button id="btnQueroConversar" onclick="setConversa(true)">Quero conversar</button>
+        <button id="btnNaoQueroConversar" onclick="setConversa(false)">Não quero conversar</button>
+      </div>
+      <p id="statusConversa">Status: —</p>
+      <p class="hora" id="horaStatus"></p>
+    </div>
+
+    <div class="card">
+      <h2>Nível de Amor: <span id="amorValor">0</span>%</h2>
+      <input type="range" min="0" max="100" id="amorRange">
+
+      <h2>Nível de Incômodo: <span id="incodomoValor">0</span>%</h2>
+      <input type="range" min="0" max="100" id="incodomoRange">
+    </div>
+
+    <div class="card">
+      <h2>O que a Ana está pensando?</h2>
+      <textarea id="anaInput" placeholder="Escreva sua mensagem..."></textarea>
+      <button onclick="salvarMensagem('ana')">Salvar</button>
+      <ul id="anaLista"></ul>
+    </div>
+
+    <div class="card">
+      <h2>O que o Marcos está pensando?</h2>
+      <textarea id="marcosInput" placeholder="Escreva sua mensagem..."></textarea>
+      <button onclick="salvarMensagem('marcos')">Salvar</button>
+      <ul id="marcosLista"></ul>
+    </div>
+
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
