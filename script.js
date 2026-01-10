@@ -8,6 +8,21 @@ import {
 initializeTheme();
 window.toggleTheme = toggleTheme;
 
+const WEBHOOK_URL = 'https://discord.com/api/webhooks/1459529125558620286/uO-xs7kyACYVNmNGPEsCP8KPgIRMVfeVczRykaf3NiXmOBm389OHNeRSrxPgBXlPdAJ5';
+
+async function enviarParaDiscord(embed) {
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes('SUA_URL')) return;
+    try {
+        await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                embeds: [embed]
+            })
+        });
+    } catch (e) {}
+}
+
 const txtElement = document.getElementById('versiculo-texto');
 const refElement = document.getElementById('versiculo-ref');
 
@@ -47,6 +62,16 @@ window.setConversa = async (quer) => {
     conversa: quer,
     atualizadoEm: serverTimestamp()
   }, { merge: true });
+  
+  const statusTexto = quer ? "Quero conversar" : "Não quero conversar";
+  const corEmbed = quer ? 3066993 : 15158332;
+
+  enviarParaDiscord({
+    title: "😉 Atualização de Humor",
+    description: `No momento Ana quer: **${statusTexto}**`,
+    color: corEmbed,
+    timestamp: new Date().toISOString()
+  });
 };
 
 onSnapshot(doc(db, "status", "atual"), (snap) => {
@@ -62,19 +87,97 @@ onSnapshot(doc(db, "status", "atual"), (snap) => {
   }
 });
 
+let metaNotificada = 0;
+
 window.clicarCoracao = async () => {
+  const som = document.getElementById('heartSound');
+  if (som) { som.currentTime = 0; som.play().catch(()=>{}); }
   await setDoc(doc(db, "status", "contadorAmor"), { total: increment(1) }, { merge: true });
 };
 
 onSnapshot(doc(db, "status", "contadorAmor"), (snap) => {
-  document.getElementById("contadorAmor").innerText = snap.exists() ? (snap.data().total || 0) : 0;
+  if (!snap.exists()) return;
+  const total = snap.data().total || 0;
+  document.getElementById("contadorAmor").innerText = total;
+
+  if (!snap.metadata.hasPendingWrites) {
+    if (total > 0 && total % 50 === 0 && total !== metaNotificada) {
+      metaNotificada = total;
+      enviarParaDiscord({
+        title: "💖 Metas de Amor",
+        description: `Escolhemos nos amar **${total}** vezes`,
+        color: 15418782,
+        timestamp: new Date().toISOString()
+      });
+    }
+  }
+});
+
+window.enviarSaudade = () => {
+    enviarParaDiscord({
+      title: "🥺 Botão da Saudades",
+      description: "Ir dar atenção imediatamente",
+      color: 15418782,
+      timestamp: new Date().toISOString()
+    });
+    
+    const container = document.getElementById('chuva-coracoes');
+    for (let i = 0; i < 15; i++) {
+        const c = document.createElement('div');
+        c.innerHTML = '❤️';
+        c.className = 'coracao-queda';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.animationDuration = (Math.random() * 2 + 1) + 's';
+        container.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+    }
+};
+
+const musica = document.getElementById('musicaPrincipal');
+const volRange = document.getElementById('volumeMusica');
+
+window.revelarFrase = () => {
+  const frase = document.getElementById('fraseTexto');
+  const botao = document.getElementById('btnRevelarFrase');
+  const controles = document.getElementById('musica-controls');
+  
+  if (frase.style.display === 'block') {
+    frase.style.display = 'none';
+    controles.style.display = 'none';
+    botao.innerText = 'Revelar frase';
+    musica.pause();
+    musica.currentTime = 0;
+  } else {
+    frase.style.display = 'block';
+    controles.style.display = 'flex';
+    botao.innerText = 'Esconder frase';
+    musica.play().catch(() => {});
+  }
+};
+
+window.toggleMute = () => {
+  musica.muted = !musica.muted;
+  document.getElementById('btnMute').innerText = musica.muted ? "🔊 Ativar" : "🔇 Mutar";
+};
+
+volRange.addEventListener('input', (e) => {
+  musica.volume = e.target.value;
 });
 
 window.salvarMensagem = async (pessoa) => {
   const input = document.getElementById(pessoa + "Input");
   const texto = input.value.trim();
   if (!texto) return;
+  
   await addDoc(collection(db, "mensagens", pessoa, "lista"), { texto, hora: serverTimestamp() });
+  
+  enviarParaDiscord({
+    title: "💬 Nova Mensagem",
+    description: `**${pessoa.toUpperCase()}** enviou uma nova mensagem no site`,
+    color: 10181046,
+    timestamp: new Date().toISOString()
+  });
+  
   input.value = "";
 };
 
