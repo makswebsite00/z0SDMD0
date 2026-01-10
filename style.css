@@ -161,7 +161,68 @@ li {
     cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+#musica-controls {
+    display: none;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#volumeMusica {
+    margin: 0 !important;
+    width: 80px !important;
+    accent-color: var(--heart-color-light);
+}
+
+#btnMute {
+    background: transparent;
+    color: var(--heart-color-light);
+    border: 1px solid var(--heart-color-light);
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
 @media (max-width: 480px) {
     .buttons { flex-direction: column; }
     .card { padding: 20px; }
+}
+
+.frase-oculta {
+    display: none;
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 20px;
+    color: var(--text-color-light);
+    animation: fadeInFrase 0.8s ease-in-out;
+}
+
+#chuva-coracoes {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.coracao-queda {
+    position: absolute;
+    top: -50px;
+    font-size: 24px;
+    animation: cair linear forwards;
+}
+
+@keyframes cair {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInFrase {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
