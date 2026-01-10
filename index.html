@@ -8,6 +8,11 @@
 </head>
 <body>
 
+  <audio id="heartSound" src="click-sound.mp3" preload="auto"></audio>
+  <audio id="musicaPrincipal" src="musica.mp3" preload="auto" loop></audio>
+  
+  <div id="chuva-coracoes"></div>
+
   <div class="theme-toggle" onclick="toggleTheme()">
     <span class="icon-light">☀️</span>
     <span class="icon-dark">🌙</span>
@@ -29,6 +34,19 @@
       <div class="heart" onclick="clicarCoracao()"></div>
       <p class="contador" id="contadorAmor">0</p>
       <p class="descricao">clique sempre que sentir vontade</p>
+      <button id="btnSaudade" onclick="enviarSaudade()" style="margin-top: 15px; background-color: #ff4d6d; border-radius: 50px;">Botão da saudades 💖</button>
+    </div>
+
+    <div class="card">
+      <h2>Uma promessa para nós</h2>
+      <p id="fraseTexto" class="frase-oculta">
+        "Em alguns momentos, eu a decepcionarei, em outros você me frustrará, mas, se tivermos coragem para reconhecer nossos erros, habilidade para sonharmos juntos e capacidade para chorarmos e recomeçarmos tudo de novo tantas vezes quantas forem necessárias, então nosso amor será imortal."
+      </p>
+      <div id="musica-controls" style="display: none; margin-bottom: 10px; align-items: center; justify-content: center; gap: 10px;">
+        <button id="btnMute" onclick="toggleMute()" style="padding: 5px 10px; font-size: 12px;">🔇 Mutar</button>
+        <input type="range" id="volumeMusica" min="0" max="1" step="0.1" value="0.5" style="width: 80px;">
+      </div>
+      <button id="btnRevelarFrase" onclick="revelarFrase()">Revelar frase</button>
     </div>
 
     <div class="card">
