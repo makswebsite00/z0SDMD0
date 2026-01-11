@@ -226,3 +226,355 @@ li {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.button-group-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#btnSaudade { 
+    background-color: #ff4d6d; 
+    border-radius: 50px; 
+    flex: 1; 
+}
+
+#btnEmergencia { 
+    background-color: #7d8cc4;
+    border-radius: 50px; 
+    flex: 1; 
+}
+
+@media (max-width: 480px) {
+    .button-group-row { flex-direction: column; }
+}
+
+#bubble-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    gap: 12px;
+    padding: 10px;
+    justify-items: center;
+}
+
+.bubble {
+    width: 45px;
+    height: 45px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, var(--button-bg-light));
+    border-radius: 50%;
+    box-shadow: inset -3px -3px 6px rgba(0,0,0,0.1), 3px 3px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.bubble:active { transform: scale(0.9); }
+
+.bubble.popped {
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1);
+    cursor: default;
+    pointer-events: none;
+}
+
+.button-group-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+#btnSaudade { background-color: #ff4d6d; border-radius: 50px; flex: 1; }
+#btnEmergencia { background-color: #7dc2c4; border-radius: 50px; flex: 1; }
+
+.respiracao-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0; 
+    min-height: 250px;
+}
+
+#instrucao-respiracao {
+    font-size: 1.4rem;
+    color: #f3c4d8;
+    margin-bottom: 40px;
+    font-weight: bold;
+    order: -1;
+}
+
+#circulo-respiracao {
+    width: 150px;
+    height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f9a8d4, #f472b6);
+  box-shadow: 0 0 20px rgba(249, 168, 212, 0.4);
+  transform: scale(1);
+  will-change: transform;
+}
+
+#respiracao-controls {
+    display: flex;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#volumeRespiracao {
+    margin: 0 !important;
+    width: 80px !important;
+    accent-color: var(--heart-color-light);
+}
+
+#btnMuteRespiracao {
+    background: transparent;
+    color: var(--heart-color-light);
+    border: 1px solid var(--heart-color-light);
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.expandir {
+  transform: scale(1.7) !important;
+  box-shadow: 0 0 60px rgba(249, 168, 212, 0.9) !important;
+}
+
+.contrair {
+  transform: scale(1) !important;
+  box-shadow: 0 0 20px rgba(249, 168, 212, 0.4) !important;
+}
+
+
+#telaRemoverPensamentos textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border-light);
+    background: var(--card-bg-light);
+    color: var(--text-color-light);
+    resize: none;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+#telaRemoverPensamentos button {
+    margin-bottom: 20px;
+    background-color: var(--button-bg-light);
+    width: 100%;
+}
+
+#pensamentosAtivos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    min-height: 100px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pensamento-item {
+    background: var(--card-bg-light);
+    border: 2px solid var(--card-border-light);
+    padding: 15px 20px;
+    border-radius: 20px;
+    max-width: 90%;
+    word-wrap: break-word;
+    font-size: 1rem;
+    color: var(--text-color-light);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: surgindo 0.3s ease-out;
+}
+
+@keyframes surgindo {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pensamento-item:hover {
+    transform: scale(1.02);
+    border-color: #f9a8d4;
+}
+
+.pensamento-item::after {
+    content: "Clique no botão a cima para destruir esse pensamento";
+    display: block;
+    font-size: 0.7rem;
+    margin-top: 8px;
+    opacity: 0.6;
+    text-align: right;
+}
+
+
+#telaRemoverPensamentos textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border-light);
+    background: var(--card-bg-light);
+    color: var(--text-color-light);
+    resize: none;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+#telaRemoverPensamentos button {
+    margin-bottom: 20px;
+    background-color: var(--button-bg-light);
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+#telaRemoverPensamentos button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+}
+
+#pensamentosAtivos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    min-height: 100px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pensamento-item {
+    background: var(--card-bg-light);
+    border: 2px solid var(--card-border-light);
+    padding: 18px 25px;
+    border-radius: 20px;
+    max-width: 90%;
+    word-wrap: break-word;
+    font-size: 1.1rem;
+    color: var(--text-color-light);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    animation: surgindo 0.5s ease-out;
+}
+
+@keyframes surgindo {
+    from { opacity: 0; transform: scale(0.8) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.quebrar-impactante {
+    pointer-events: none;
+    animation: destruicaoCrescente 3s forwards cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+@keyframes destruicaoCrescente {
+    0% { transform: scale(1); }
+    5%, 15%, 25% { transform: scale(1.02) rotate(1deg); }
+    10%, 20%, 30% { transform: scale(1.02) rotate(-1deg); }
+    
+    40% { transform: scale(1.1); filter: brightness(1.2); }
+    60% { transform: scale(1.2); filter: brightness(1.5) blur(1px); opacity: 1; }
+    
+    80% { transform: scale(1.4); filter: brightness(2) blur(4px); opacity: 0.7; }
+    100% { transform: scale(0); filter: brightness(3) blur(20px); opacity: 0; }
+}
+
+[data-theme="dark"] .pensamento-item {
+    background: var(--card-bg-dark);
+    border-color: var(--card-border-dark);
+    color: var(--text-color-dark);
+}
+
+#telaMusiquinhas h1 {
+    color: var(--heart-color-light);
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 800;
+}
+
+#spotify-container {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    line-height: 0;
+    margin-bottom: 25px; 
+    border: 1px solid var(--card-border-light);
+    background: #000;
+}
+
+#v-musica-texto {
+    font-style: italic;
+    transition: opacity 0.5s;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    margin: 0;
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
+
+#telaMusiquinhas .bible-card {
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    text-align: center;
+    background: var(--card-bg-light);
+    border-radius: 15px;
+    border-top: 4px solid var(--heart-color-light);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+#v-musica-ref {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--heart-color-light);
+    opacity: 0.8;
+}
+
+[data-theme="dark"] #spotify-container {
+    filter: brightness(0.8);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] #telaMusiquinhas .bible-card {
+    background: var(--card-bg-dark);
+}
+
+@media (max-width: 480px) {
+    #telaMusiquinhas h1 {
+        font-size: 1.8rem;
+    }
+    
+    #v-musica-texto {
+        font-size: 1rem;
+    }
+
+    #telaMusiquinhas .bible-card {
+        min-height: 180px;
+        padding: 15px;
+    }
+}
