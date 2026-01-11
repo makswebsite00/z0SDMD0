@@ -214,7 +214,7 @@ window.adicionarPensamento = () => {
     const btn = document.getElementById('btnAcaoPensamento');
     const container = document.getElementById('pensamentosAtivos');
     const textoPensamento = input.value.trim();
-
+    
     if (textoPensamento !== "" && container.children.length > 0) {
         alert("Destrua o pensamento atual antes de enviar um novo! ✨");
         return;
@@ -222,11 +222,18 @@ window.adicionarPensamento = () => {
 
     if (textoPensamento === "" && container.children.length > 0) {
         const itemParaDestruir = container.children[0];
+        
         if (itemParaDestruir && !itemParaDestruir.classList.contains('quebrar-impactante')) {
             btn.disabled = true;
             btn.innerText = "Destruindo...";
-            if (somDestruir) { somDestruir.currentTime = 0; somDestruir.play().catch(()=>{}); }
+            
+            if (somDestruir) { 
+                somDestruir.currentTime = 0; 
+                somDestruir.play().catch(()=>{}); 
+            }
+            
             itemParaDestruir.classList.add('quebrar-impactante');
+            
             setTimeout(() => {
                 itemParaDestruir.remove();
                 btn.disabled = false;
@@ -237,10 +244,12 @@ window.adicionarPensamento = () => {
     }
 
     if (textoPensamento === "") return;
+
     const pensamentoItem = document.createElement('div');
     pensamentoItem.className = 'pensamento-item';
     pensamentoItem.innerText = textoPensamento;
-    container.appendChild(itemParaDestruir);
+    
+    container.appendChild(pensamentoItem); 
     btn.innerText = "Destruir Pensamento";
     input.value = ''; 
 };
@@ -423,5 +432,6 @@ window.salvarMensagem = async (pessoa) => {
             });
     });
 });
+
 
 
