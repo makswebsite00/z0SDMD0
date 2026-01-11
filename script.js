@@ -369,7 +369,7 @@ onSnapshot(doc(db, "status", "contadorAmor"), (snap) => {
 window.enviarSaudade = () => {
     enviarParaDiscord({
         title: "🥺 Botão da Saudades",
-        description: "Alguém clicou no botão de saudades!",
+        description: "Ir da atenção imediatamente",
         color: 15418782,
         timestamp: new Date().toISOString()
     });
@@ -394,7 +394,7 @@ window.salvarMensagem = async (pessoa) => {
     
     enviarParaDiscord({
         title: "💬 Nova Mensagem",
-        description: `**${pessoa.toUpperCase()}** enviou: ${texto}`,
+        description: `**${pessoa.toUpperCase()}** enviou uma nova mensagem no site`,
         color: 10181046,
         timestamp: new Date().toISOString()
     });
@@ -417,3 +417,4 @@ window.salvarMensagem = async (pessoa) => {
             });
     });
 });
+
