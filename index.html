@@ -10,7 +10,11 @@
 
   <audio id="heartSound" src="click-sound.mp3" preload="auto"></audio>
   <audio id="musicaPrincipal" src="musica.mp3" preload="auto" loop></audio>
-  
+  <audio id="popSound" src="jogo-bolhas.mp3" preload="auto"></audio>
+  <audio id="audioRespiracao" src="jogo-respiracao.mp3" preload="auto" loop></audio>
+  <audio id="somPlim" src="plim.mp3" preload="auto"></audio>
+  <audio id="somDestruir" src="jogo-destruir.mp3" preload="auto"></audio>
+
   <div id="chuva-coracoes"></div>
 
   <div class="theme-toggle" onclick="toggleTheme()">
@@ -18,76 +22,163 @@
     <span class="icon-dark">🌙</span>
   </div>
 
-  <h1>Nosso Cantinho</h1>
+  <div id="conteudoPrincipal">
+    <h1>Nosso Cantinho</h1>
+    <div class="container">
+      
+      <div class="card bible-card">
+        <div id="versiculo-container">
+          <p id="versiculo-texto">"Carregando palavra de amor..."</p>
+          <span id="versiculo-ref"></span>
+        </div>
+      </div>
 
-  <div class="container">
-    
-    <div class="card bible-card">
-      <div id="versiculo-container">
-        <p id="versiculo-texto">"Carregando palavra de amor..."</p>
-        <span id="versiculo-ref"></span>
+      <div class="card heart-card">
+        <h2>Quantas vezes escolhemos nos amar</h2>
+        <div class="heart" onclick="clicarCoracao()"></div>
+        <p class="contador" id="contadorAmor">0</p>
+        <p class="descricao">clique sempre que sentir vontade</p>
+        <div class="button-group-row">
+            <button id="btnSaudade" onclick="enviarSaudade()">Botão da Saudade 💖</button>
+            <button id="btnEmergencia" onclick="alternarAreaJogos()">Botão Acalmar ✨</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Uma promessa para nós</h2>
+        <p id="fraseTexto" class="frase-oculta">
+          "Em alguns momentos, eu a decepcionarei, em outros você me frustrará, mas, se tivermos coragem para reconhecer nossos erros, habilidade para sonharmos juntos e capacidade para chorarmos e recomeçarmos tudo de novo tantas vezes quantas forem necessárias, então nosso amor será imortal."
+        </p>
+        <div id="musica-controls" style="display: none; margin-bottom: 10px;">
+          <button id="btnMute" onclick="toggleMute()">🔇 Mutar</button>
+          <input type="range" id="volumeMusica" min="0" max="1" step="0.1" value="0.5">
+        </div>
+        <button id="btnRevelarFrase" onclick="revelarFrase()">Revelar frase</button>
+      </div>
+
+      <div class="card">
+        <h2>Quer conversar?</h2>
+        <div class="buttons">
+          <button id="btnQueroConversar" onclick="setConversa(true)">Quero conversar</button>
+          <button id="btnNaoQueroConversar" onclick="setConversa(false)">Não quero conversar</button>
+        </div>
+        <p id="statusConversa">Status: —</p>
+        <p class="hora" id="horaStatus"></p>
+      </div>
+
+      <div class="card">
+        <h2>Nível de Amor: <span id="amorValor">0</span>%</h2>
+        <input type="range" min="0" max="100" id="amorRange">
+        <h2>Nível de Incômodo: <span id="incodomoValor">0</span>%</h2>
+        <input type="range" min="0" max="100" id="incodomoRange">
+      </div>
+
+      <div class="card">
+        <h2>O que a Ana está pensando?</h2>
+        <textarea id="anaInput" placeholder="Escreva sua mensagem..."></textarea>
+        <button onclick="salvarMensagem('ana')">Salvar</button>
+        <div class="lista-wrapper"><ul id="anaLista"></ul></div>
+      </div>
+
+      <div class="card">
+        <h2>O que o Marcos está pensando?</h2>
+        <textarea id="marcosInput" placeholder="Escreva sua mensagem..."></textarea>
+        <button onclick="salvarMensagem('marcos')">Salvar</button>
+        <div class="lista-wrapper"><ul id="marcosLista"></ul></div>
       </div>
     </div>
-
-    <div class="card heart-card">
-      <h2>Quantas vezes escolhemos nos amar</h2>
-      <div class="heart" onclick="clicarCoracao()"></div>
-      <p class="contador" id="contadorAmor">0</p>
-      <p class="descricao">clique sempre que sentir vontade</p>
-      <button id="btnSaudade" onclick="enviarSaudade()" style="margin-top: 15px; background-color: #ff4d6d; border-radius: 50px;">Botão da saudades 💖</button>
-    </div>
-
-    <div class="card">
-      <h2>Uma promessa para nós</h2>
-      <p id="fraseTexto" class="frase-oculta">
-        Em alguns momentos, eu a decepcionarei, em outros você me frustrará, mas, se tivermos coragem para reconhecer nossos erros, habilidade para sonharmos juntos e capacidade para chorarmos e recomeçarmos tudo de novo tantas vezes quantas forem necessárias, então nosso amor será imortal.
-      </p>
-      <div id="musica-controls" style="display: none; margin-bottom: 10px; align-items: center; justify-content: center; gap: 10px;">
-        <button id="btnMute" onclick="toggleMute()" style="padding: 5px 10px; font-size: 12px;">🔇 Mutar</button>
-        <input type="range" id="volumeMusica" min="0" max="1" step="0.1" value="0.5" style="width: 80px;">
-      </div>
-      <button id="btnRevelarFrase" onclick="revelarFrase()">Revelar frase</button>
-    </div>
-
-    <div class="card">
-      <h2>Quer conversar?</h2>
-      <div class="buttons">
-        <button id="btnQueroConversar" onclick="setConversa(true)">Quero conversar</button>
-        <button id="btnNaoQueroConversar" onclick="setConversa(false)">Não quero conversar</button>
-      </div>
-      <p id="statusConversa">Status: —</p>
-      <p class="hora" id="horaStatus"></p>
-    </div>
-
-    <div class="card">
-      <h2>Nível de Amor: <span id="amorValor">0</span>%</h2>
-      <input type="range" min="0" max="100" id="amorRange">
-
-      <h2>Nível de Incômodo: <span id="incodomoValor">0</span>%</h2>
-      <input type="range" min="0" max="100" id="incodomoRange">
-    </div>
-
-    <div class="card">
-      <h2>O que a Ana está pensando?</h2>
-      <textarea id="anaInput" placeholder="Escreva sua mensagem..."></textarea>
-      <button onclick="salvarMensagem('ana')">Salvar</button>
-      <div class="lista-wrapper">
-        <ul id="anaLista"></ul>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>O que o Marcos está pensando?</h2>
-      <textarea id="marcosInput" placeholder="Escreva sua mensagem..."></textarea>
-      <button onclick="salvarMensagem('marcos')">Salvar</button>
-      <div class="lista-wrapper">
-        <ul id="marcosLista"></ul>
-      </div>
-    </div>
-
   </div>
 
+  <div id="areaJogos" style="display: none;">
+    <h1>Espaço para Acalmar</h1>
+    <div class="container">
+      <div class="card" onclick="abrirPlasticoBolha()" style="cursor: pointer;">
+        <h2>🫧 Jogo da Bolha </h2>
+        <p>Clique nas bolhas para acalmar sua ansiedade.</p>
+      </div>
+      <div class="card" onclick="abrirRespiracao()" style="cursor: pointer;">
+        <h2>😮‍💨 Respiração Guiada</h2>
+        <p>Siga o guia de respiração para acalmar.</p>
+      </div>
+      <div class="card" onclick="abrirRemoverPensamentos()" style="cursor: pointer;">
+        <h2>🧠 Remova os Pensamentos</h2>
+        <p>Escreva o que te aflige e veja ir embora.</p>
+      </div>
+      <div class="card" onclick="abrirMusiquinhas()" style="cursor: pointer;">
+        <h2>🎵 Musiquinhas & Fé</h2>
+        <p>Escute sua playlist enquanto ler versículos da bíblia.</p>
+      </div>
+      
+      <button onclick="alternarAreaJogos()" style="background-color: #f80303; margin-top: 20px;">⬅ Voltar ao Cantinho</button>
+    </div>
+  </div>
+
+  <div id="telaPlasticoBolha" style="display: none;">
+    <h1>🫧 Jogo da Bolha </h1>
+    <div class="container">
+      <div class="card">
+        <div id="bubble-container"></div>
+        <div class="button-group-row" style="margin-top: 20px;">
+          <button onclick="gerarBolhas()" style="background-color: #11d15b;">Reiniciar</button>
+          <button onclick="fecharJogo()" style="background-color: #f80303;">Sair </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="telaRespiracao" style="display: none;">
+    <h1>😮‍💨 Respiração Guiada</h1>
+    <div class="container">
+      <div class="card">
+        <p id="instrucao-respiracao">Prepare-se...</p>
+        <div class="respiracao-container">
+          <div id="circulo-respiracao" class="contrair"></div> 
+        </div>
+        <div id="respiracao-controls">
+          <button id="btnMuteRespiracao" onclick="toggleMuteRespiracao()">🔇 Mutar Guia</button>
+          <input type="range" id="volumeRespiracao" min="0" max="1" step="0.1" value="0.5">
+        </div>
+        <button onclick="fecharRespiracao()" style="background-color: #f80303; margin-top: 20px;">Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="telaRemoverPensamentos" style="display: none;">
+    <h1>🧠 Remova os Pensamentos</h1>
+    <div class="container">
+      <div class="card">
+        <p style="margin-bottom: 20px; font-style: italic; opacity: 0.8;">
+          Escreva o que está te afligindo e deixe esses pensamentos irem embora da sua mente.
+        </p>
+        <textarea id="pensamentoInput" placeholder="O que está pesando hoje?"></textarea>
+        <button id="btnAcaoPensamento" onclick="adicionarPensamento()" style="margin-bottom: 20px;">Enviar Pensamento</button>
+        <div id="pensamentosAtivos"></div>
+        <button onclick="fecharRemoverPensamentos()" style="background-color: #f80303; margin-top: 20px; width: 20%;">Sair</button>
+      </div>
+    </div>
+  </div>
+
+<div id="telaMusiquinhas" style="display: none;">
+  <h1>🎵 Musiquinhas & Fé</h1>
+  <div class="container">
+    <div class="card">
+      
+      <div id="spotify-container">
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6TCgylGe3s4TwyZLx0FAMN?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+
+      <div class="card bible-card" style="margin-top: 20px;">
+        <div id="versiculo-container">
+          <p id="v-musica-texto">"Carregando palavra de fé..."</p>
+          <span id="v-musica-ref"></span>
+        </div>
+      </div>
+
+      <button onclick="fecharMusiquinhas()" style="background-color: #ff0000; margin-top: 20px; width: 20%;">Sair </button>
+    </div>
+  </div>
+</div>
+  
   <script type="module" src="script.js"></script>
 </body>
 </html>
-
