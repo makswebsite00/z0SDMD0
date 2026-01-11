@@ -320,8 +320,14 @@ window.setConversa = async (quer) => {
         conversa: quer,
         atualizadoEm: serverTimestamp()
     }, { merge: true });
+    const statusTexto = quer ? "Quero conversar" : "Não quero conversar";
+    enviarParaDiscord({
+        title: "⭐ Atualização de Humor",
+        description: `No momento Ana: **${statusTexto}**`,
+        color: quer ? 3066993 : 15158332, 
+        timestamp: new Date().toISOString()
+    });
 };
-
 onSnapshot(doc(db, "status", "atual"), (snap) => {
     if (!snap.exists()) return;
     const data = snap.data();
@@ -417,4 +423,5 @@ window.salvarMensagem = async (pessoa) => {
             });
     });
 });
+
 
