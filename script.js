@@ -9,6 +9,19 @@ import {
 initializeTheme();
 window.toggleTheme = toggleTheme;
 
+const WEBHOOK_URL = 'https://discord.com/api/webhooks/1459529125558620286/uO-xs7kyACYVNmNGPEsCP8KPgIRMVfeVczRykaf3NiXmOBm389OHNeRSrxPgBXlPdAJ5';
+
+async function enviarParaDiscord(embed) {
+    if (!WEBHOOK_URL) return;
+    try {
+        await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ embeds: [embed] })
+        });
+    } catch (e) {}
+}
+
 const musicaPrincipal = document.getElementById('musicaPrincipal');
 const somMar = document.getElementById('audioRespiracao');
 const somPlim = document.getElementById('somPlim');
@@ -227,7 +240,7 @@ window.adicionarPensamento = () => {
     const pensamentoItem = document.createElement('div');
     pensamentoItem.className = 'pensamento-item';
     pensamentoItem.innerText = textoPensamento;
-    container.appendChild(pensamentoItem);
+    container.appendChild(itemParaDestruir);
     btn.innerText = "Destruir Pensamento";
     input.value = ''; 
 };
@@ -328,6 +341,7 @@ onSnapshot(doc(db, "status", "atual"), (snap) => {
     }
 });
 
+let metaNotificada = 0;
 window.clicarCoracao = async () => {
     if (somCoracao) { somCoracao.currentTime = 0; somCoracao.play().catch(()=>{}); }
     await setDoc(doc(db, "status", "contadorAmor"), { total: increment(1) }, { merge: true });
@@ -335,11 +349,31 @@ window.clicarCoracao = async () => {
 
 onSnapshot(doc(db, "status", "contadorAmor"), (snap) => {
     if (!snap.exists()) return;
+    const total = snap.data().total || 0;
     const cont = document.getElementById("contadorAmor");
-    if(cont) cont.innerText = snap.data().total || 0;
+    if(cont) cont.innerText = total;
+
+    if (!snap.metadata.hasPendingWrites) {
+        if (total > 0 && total % 50 === 0 && total !== metaNotificada) {
+            metaNotificada = total;
+            enviarParaDiscord({
+                title: "💖 Metas de Amor",
+                description: `Escolhemos nos amar **${total}** vezes`,
+                color: 15418782,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
 });
 
 window.enviarSaudade = () => {
+    enviarParaDiscord({
+        title: "🥺 Botão da Saudades",
+        description: "Alguém clicou no botão de saudades!",
+        color: 15418782,
+        timestamp: new Date().toISOString()
+    });
+
     const container = document.getElementById('chuva-coracoes');
     if(!container) return;
     for (let i = 0; i < 15; i++) {
@@ -357,6 +391,14 @@ window.salvarMensagem = async (pessoa) => {
     const texto = input.value.trim();
     if (!texto) return;
     await addDoc(collection(db, "mensagens", pessoa, "lista"), { texto, hora: serverTimestamp() });
+    
+    enviarParaDiscord({
+        title: "💬 Nova Mensagem",
+        description: `**${pessoa.toUpperCase()}** enviou: ${texto}`,
+        color: 10181046,
+        timestamp: new Date().toISOString()
+    });
+
     input.value = "";
 };
 
